@@ -1,0 +1,131 @@
+<div class="w-[1200px] flex flex-col mt-20 px-20" *ngIf="!showMessage">
+  <h2 class="text-4xl mt-10 font-bold text-center" *ngIf="!showMessage">
+    Nothing to display !!! <br /><br />Add users from <br />
+    <span
+      class="cursor-pointer text-pink-300 underline"
+      [routerLink]="['/userinput']"
+    >
+      Add User Workout</span
+    ><br /><span class="text-lg"
+      >(You Can Find it in the Sidebar or just click the pink text above)</span
+    >
+  </h2>
+</div>
+<div class="w-[1200px] flex flex-col mt-20 px-20" *ngIf="showMessage">
+  <div class="flex justify-between">
+    <input
+      type="text"
+      name=""
+      id=""
+      placeholder="Search by name"
+      class="focus:outline-none bg-[#ff336670] placeholder:text-gray-700 px-2 py-3 rounded-lg"
+      [(ngModel)]="searchTerm"
+      (input)="filterUserData()"
+    />
+    <div class="flex items-center justify-between">
+      <label for="type" class="mr-6">Filter by Workout Type</label>
+      <select
+        name=""
+        id=""
+        class="workout-types focus:outline-none bg-[#ff336670] placeholder:text-gray-700 px-2 py-3 rounded-lg"
+        (change)="onWorkoutTypeChange($event)"
+      >
+        <option value="All">All</option>
+        <option value="Swimming">Swimming</option>
+        <option value="Cycling">Cycling</option>
+        <option value="Running">Running</option>
+        <option value="Yoga">Yoga</option>
+      </select>
+    </div>
+  </div>
+  <div class="mt-16">
+    <div class="h-[22rem]">
+      <table class="w-full h-auto">
+        <thead>
+          <tr class="bg-[#ff336670] text-pink-800">
+            <th class="py-3 w-1/12">Sr. No.</th>
+            <th class="py-3 w-1/6">Name</th>
+            <th class="py-3 w-1/6">Workout</th>
+            <th class="py-3 w-1/6">Number of workouts</th>
+            <th class="py-3 w-1/6">Total Workout Minutes</th>
+          </tr>
+        </thead>
+        <tbody class="w-full text-center">
+          <tr
+            class="text-pink-700"
+            *ngFor="let user of filteredUserData; let even = even"
+            [ngClass]="{ 'bg-fuchsia-50': even, 'bg-[#fff]': !even }"
+          >
+            <td class="py-4">{{ user.id }}</td>
+            <td class="py-4">{{ user.name }}</td>
+            <td>
+              <span *ngFor="let workout of user.workouts">
+                {{ workout.type }}{{ workout.type2 && ", " + workout.type2 }}
+              </span>
+            </td>
+            <td>{{ user.workouts.length }}</td>
+            <td>
+              <span>
+                {{ user.totalMinutes }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="flex justify-evenly items-center mt-8">
+      <div class="flex justify-between w-1/3 items-center">
+        <button
+          class="border-2 px-6 py-2 rounded-lg border-[#ff336650] text-[black]"
+          [ngClass]="{
+            'bg-gray-200 text-gray-500 cursor-not-allowed':
+              isFirstPage() || filteredUserData.length === 0,
+            'hover:bg-[#ff336630]':
+              !isFirstPage() && filteredUserData.length > 0
+          }"
+          [disabled]="isFirstPage() || filteredUserData.length === 0"
+          (click)="prevPage()"
+        >
+          Prev
+        </button>
+        <span *ngFor="let page of pageNumbers">
+          <button
+            class="border-2 px-4 py-2 rounded-full border-[#ff336650] text-[black]"
+            [ngClass]="{
+              'bg-[#ff336670] text-white': currentPage === page,
+              'hover:bg-[#ff336630]': currentPage !== page
+            }"
+            [class.active]="currentPage === page"
+            (click)="goToPage(page)"
+          >
+            {{ page }}
+          </button>
+        </span>
+        <button
+          class="border-2 px-6 py-2 rounded-lg border-[#ff336650] text-[black]"
+          [ngClass]="{
+            'bg-gray-200 text-gray-500 cursor-not-allowed':
+              isLastPage() || filteredUserData.length === 0,
+            'hover:bg-[#ff336630]': !isLastPage() && filteredUserData.length > 0
+          }"
+          [disabled]="isLastPage() || filteredUserData.length === 0"
+          (click)="nextPage()"
+        >
+          Next
+        </button>
+      </div>
+      <div class="flex justify-between w-1/6">
+        <p class="text-slate-800">Items Per Page :</p>
+        <select
+          class="number-of-entries focus:outline-none px-2 border-2 rounded-lg border-[#ff336650]"
+          (change)="onRowsPerPageChange($event)"
+        >
+          <option value="5">5</option>
+          <option value="4">4</option>
+          <option value="3">3</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>

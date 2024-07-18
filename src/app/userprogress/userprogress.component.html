@@ -1,0 +1,38 @@
+<div class="w-[1200px] flex flex-col mt-20 px-20" *ngIf="!showMessage">
+  <h2 class="text-4xl mt-10 font-bold text-center" *ngIf="!showMessage">
+    Nothing to display !!! <br /><br />Add users from <br />
+    <span
+      class="cursor-pointer text-pink-300 underline"
+      [routerLink]="['/userinput']"
+    >
+      Add User Workout</span
+    ><br /><span class="text-lg"
+      >(You Can Find it in the Sidebar or just click the pink text above)</span
+    >
+  </h2>
+</div>
+<div class="w-[1100px] h-full flex items-center" *ngIf="showMessage">
+  <div class="w-1/3 h-[90%] flex flex-col ml-8 items-center">
+    <h2 class="text-3xl mt-10 font-bold">List of Users</h2>
+    <ul class="users-list mt-6">
+      <li
+        *ngFor="let user of userData"
+        (click)="onUserClick(user)"
+        class="py-3 px-10 rounded-md bg-[#ff336640] my-3 w-full hover:bg-slate-200 cursor-pointer"
+      >
+        {{ user.id }}. {{ user.name }}
+      </li>
+    </ul>
+  </div>
+  <div
+    class="ml-8 user-chart w-1/2 h-full flex flex-col items-center justify-center"
+  >
+    <h2 class="text-2xl font-bold text-[#ff3366]" *ngIf="selectedUser">
+      {{ selectedUser.name }}'s Workout(s)
+    </h2>
+    <p class="text-[#ff336690]" *ngIf="showMessage">
+      Hover On Bar to Know to the exact time (in minutes)
+    </p>
+    <canvas id="userChart"></canvas>
+  </div>
+</div>

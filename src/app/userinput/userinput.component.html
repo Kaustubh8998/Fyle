@@ -1,0 +1,82 @@
+<div class="w-[1200px] flex flex-col mt-20 px-20">
+  <h1 class="text-2xl font-bold">Add User Workout</h1>
+  <form
+    class="pt-10 grid grid-cols-3 gap-5"
+    [formGroup]="workoutForm"
+    (ngSubmit)="addWorkout()"
+  >
+    <div class="grid row-start-1">
+      <label for="name" class="pl-2">Add Your Name *</label>
+      <input
+        type="text"
+        class="bg-[#ff336650] focus:bg-[#ff336680] placeholder:text-l focus:outline-none mt-3 p-3 rounded-xl placeholder:text-[#0009] focus:placeholder:none"
+        placeholder="User Name"
+        id="name"
+        name="name"
+        formControlName="name"
+      />
+    </div>
+    <div class="grid row-start-2">
+      <label> Workout Type (Select for more) * </label>
+      <select
+        formControlName="workoutType"
+        class="bg-[#ff336650] focus:bg-[#ff336680] focus:outline-none mt-3 p-3 rounded-xl"
+      >
+        <option value="Swimming">Swimming</option>
+        <option value="Cycling">Cycling</option>
+        <option value="Running">Running</option>
+        <option value="Yoga">Yoga</option>
+      </select>
+    </div>
+    <div class="grid row-start-2">
+      <label for="mins" class="pl-2">Workout Minutes *</label>
+      <input
+        type="number"
+        class="bg-[#ff336650] focus:bg-[#ff336680] placeholder:text-l focus:outline-none mt-3 p-3 rounded-xl placeholder:text-[#0009] focus:placeholder:none"
+        placeholder="Minutes (1 hr = 60 mins)"
+        id="mins"
+        name="mins"
+        formControlName="minutes"
+      />
+    </div>
+
+    <!-- Additional workout fields (hidden by default) -->
+
+    <div *ngIf="!showAddMoreButton" class="row-start-3 flex flex-col">
+      <label> Additional Workout Type </label>
+      <select
+        formControlName="workoutType2"
+        class="bg-[#ff336650] focus:bg-[#ff336680] focus:outline-none mt-3 p-3 rounded-xl"
+      >
+        <option value="Swimming">Swimming</option>
+        <option value="Cycling">Cycling</option>
+        <option value="Running">Running</option>
+        <option value="Yoga">Yoga</option>
+      </select>
+    </div>
+    <div *ngIf="!showAddMoreButton" class="row-start-3 flex flex-col">
+      <label for="mins2" class="pl-2">Additional Workout Minutes *</label>
+      <input
+        type="number"
+        class="bg-[#ff336650] focus:bg-[#ff336680] placeholder:text-l focus:outline-none mt-3 p-3 rounded-xl placeholder:text-[#0009] focus:placeholder:none"
+        placeholder="Minutes (1 hr = 60 mins)"
+        id="mins2"
+        name="mins2"
+        formControlName="minutes2"
+      />
+    </div>
+    <button
+      *ngIf="showAddMoreButton"
+      class="row-start-2 font-semibold text-xl border-[1px] border-gray-400 text-blue-900 mt-8 rounded-2xl"
+      type="button"
+      (click)="addWorkoutSection()"
+    >
+      + Add More Workout Type
+    </button>
+    <button
+      class="row-start-4 col-span-3 font-bold text-xl border-[1px] bg-gray-800 text-[#fff] p-3 mt-6 rounded-2xl"
+    >
+      + Add Workout
+    </button>
+  </form>
+</div>
